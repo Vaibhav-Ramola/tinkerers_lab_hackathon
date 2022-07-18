@@ -24,6 +24,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             onPressed: () {},
             icon: const Icon(
               Icons.add_rounded,
+              color: Colors.white,
             ),
           ),
         ],
@@ -32,7 +33,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         child: ListView(
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Container(
                 alignment: Alignment.center,
                 child: const Text(
@@ -76,13 +77,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.only(
+          right: 24,
+          left: 24,
+          top: 8,
+        ),
         child: GridView.builder(
           itemCount: 20,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+            crossAxisSpacing: 24,
+            mainAxisSpacing: 24,
           ),
           itemBuilder: (context, index) {
             return LayoutBuilder(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
 class InventoryTile extends StatefulWidget {
-  final constraints;
+  final BoxConstraints constraints;
 
   const InventoryTile(this.constraints, {Key? key}) : super(key: key);
 
@@ -15,52 +15,62 @@ class _InventoryTileState extends State<InventoryTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
-      width: 50,
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      // height: 90,
+      // width: 50,
+      padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
       decoration: BoxDecoration(
         border: Border.all(
           style: BorderStyle.solid,
           color: Colors.orange,
           width: 1,
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: ListView(
+      child: Column(
         children: [
           Expanded(
-            child: GestureDetector(
-              onDoubleTap: (() {
-                setState(() {
-                  isLiked = !isLiked;
-                });
-              }),
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: 10,
-                    top: 10,
-                    child: LikeButton(
-                      size: 40,
-                      isLiked: isLiked,
-                    ),
-                  ),
-                  Expanded(
-                    child: Card(
-                      elevation: 5,
-                      child: Container(
-                        height: widget.constraints.maxHeight * 0.6,
-                        width: double.infinity,
-                        color: Colors.orange,
+            child: Stack(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        child: Card(
+                          elevation: 5,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(5),
+                            ),
+                            child: SizedBox(
+                              height: widget.constraints.maxHeight * 0.6,
+                              width: double.infinity,
+                              // color: Colors.orange,
+                              child: const Placeholder(),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: LikeButton(
+                    size: 25,
+                    isLiked: isLiked,
+                  ),
+                ),
+              ],
             ),
           ),
-          const Spacer(),
+          // const Spacer(),
           Container(
+            height: widget.constraints.maxHeight * 0.2,
             width: double.infinity,
             alignment: Alignment.center,
             child: const Text(
@@ -74,19 +84,23 @@ class _InventoryTileState extends State<InventoryTile> {
               Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    bottomRight: Radius.circular(24),
+                    topLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12),
                   ),
                 ),
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(
-                    height: widget.constraints.minHeight,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.orange,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        bottomRight: Radius.circular(24),
+                      border: Border.all(
+                        color: Colors.orange,
+                        style: BorderStyle.solid,
+                        width: 2,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(11),
                       ),
                     ),
                     child: const Center(
