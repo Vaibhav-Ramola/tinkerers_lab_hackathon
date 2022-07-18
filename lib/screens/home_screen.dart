@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
+import 'package:tinkerlab_app/providers/item_provider.dart';
 import 'package:tinkerlab_app/screens/categories_screen.dart';
 import 'package:tinkerlab_app/screens/favourites_screen.dart';
 import 'package:tinkerlab_app/screens/purchase_screen.dart';
@@ -21,37 +23,44 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLiked = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[screenIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: ((value) {
-          setState(() {
-            screenIndex = value;
-          });
-        }),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: screenIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_outline_rounded,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: ((context) => ItemProvider()),
+        ),
+      ],
+      child: Scaffold(
+        body: screens[screenIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: ((value) {
+            setState(() {
+              screenIndex = value;
+            });
+          }),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: screenIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite_outline_rounded,
+              ),
+              label: "favourites",
             ),
-            label: "favourites",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.inventory_2_rounded,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.inventory_2_rounded,
+              ),
+              label: "inventory",
             ),
-            label: "inventory",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_basket_rounded,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.shopping_basket_rounded,
+              ),
+              label: "issue",
             ),
-            label: "issue",
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
