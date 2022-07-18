@@ -160,7 +160,6 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
                     }
                     return null;
                   },
-                  onSaved: (newValue) => category = newValue as String,
                   decoration: const InputDecoration(
                     label: Text("Category"),
                     border: OutlineInputBorder(),
@@ -191,17 +190,25 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
                   child: ElevatedButton(
                     child: const Text("Add ! "),
                     onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        category = selectedItem;
+                      }
                       Provider.of<ItemProvider>(
                         context,
                         listen: false,
-                      ).addItemToInventory(
-                        Item(
-                          category: category!,
-                          description: description!,
-                          imageUrl: imageUrl!,
-                          name: name!,
-                        ),
-                      );
+                      )
+                          .addItemToInventory(
+                            Item(
+                              category: category!,
+                              description: description!,
+                              imageUrl: imageUrl!,
+                              name: name!,
+                            ),
+                          )
+                          .then(
+                            (value) => Navigator.of(context).pop(),
+                          );
                     },
                   ),
                 ),

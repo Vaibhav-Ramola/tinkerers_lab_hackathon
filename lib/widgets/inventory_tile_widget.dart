@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
+import '../models/item_model.dart';
+
 class InventoryTile extends StatefulWidget {
   final BoxConstraints constraints;
+  final Item item;
 
-  const InventoryTile(this.constraints, {Key? key}) : super(key: key);
+  const InventoryTile(this.constraints, this.item, {Key? key})
+      : super(key: key);
 
   @override
   State<InventoryTile> createState() => _InventoryTileState();
@@ -49,7 +53,12 @@ class _InventoryTileState extends State<InventoryTile> {
                               height: widget.constraints.maxHeight * 0.6,
                               width: double.infinity,
                               // color: Colors.orange,
-                              child: const Placeholder(),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(
+                                  widget.item.imageUrl,
+                                ),
+                              ),
                             ),
                           ),
                         ),
