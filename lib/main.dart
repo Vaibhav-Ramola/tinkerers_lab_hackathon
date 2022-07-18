@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinkerlab_app/screens/add_new_item_screen.dart';
 import 'package:tinkerlab_app/screens/home_screen.dart';
 
 void main() {
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomeScreen(),
+      routes: {
+        "add_new_item" :(context) => const AddNewItemScreen(),
+      },
     );
   }
 }

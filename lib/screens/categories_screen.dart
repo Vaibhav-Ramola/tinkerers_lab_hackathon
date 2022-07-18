@@ -15,13 +15,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text(
           "Tinkerer's Inventory",
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed("add_new_item");
+            },
             icon: const Icon(
               Icons.add_rounded,
               color: Colors.white,
