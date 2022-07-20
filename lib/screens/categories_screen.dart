@@ -108,7 +108,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       body: FutureBuilder(
           future: Provider.of<ItemProvider>(
             context,
-            listen: false,
+            // listen: false,
           ).fetchAndSetInventoryItems(),
           builder: (context, snapshot) {
             // print(snapshot);

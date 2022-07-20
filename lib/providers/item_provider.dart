@@ -200,6 +200,9 @@ class ItemProvider with ChangeNotifier {
   }
 
   Future<void> sendRequest(List<CartItem> list) async {
+    String? email = auth.currentUser?.email;
+    int index = email!.indexOf('@');
+    email = email.substring(0, index);
     String body = "";
     for (var element in list) {
       print("cart items : ${element.name}");
@@ -209,8 +212,12 @@ class ItemProvider with ChangeNotifier {
     final url = Uri.parse(
       "mailto:ep20btech11025@iith.ac.in?subject=${Uri.encodeFull("Request to Issue")}&body=${Uri.encodeFull(body)}",
     );
+    final delUrl = Uri.parse(
+      "https://tinkererslab-e8d3e-default-rtdb.asia-southeast1.firebasedatabase.app/$email/cart.json",
+    );
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
+      await http.delete(delUrl);
     }
   }
 
