@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:like_button/like_button.dart';
@@ -14,6 +15,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   bool isLiked = false;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final inventoryItemsList =
@@ -77,8 +79,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               onTap: () {},
             ),
             ListTile(
-              title: Text("logout"),
-              onTap: () {},
+              title: const Text("logout"),
+              onTap: () {
+                auth.signOut();
+              },
             )
           ],
         ),
@@ -87,8 +91,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           future:
               Provider.of<ItemProvider>(context).fetchAndSetInventoryItems(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting ||
-                snapshot.connectionState == ConnectionState.none) {
+            print(snapshot);
+            if (!snapshot.hasData) {
               return const SizedBox(
                 height: double.infinity,
                 width: double.infinity,

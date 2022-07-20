@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
@@ -15,9 +16,17 @@ class InventoryTile extends StatefulWidget {
 }
 
 class _InventoryTileState extends State<InventoryTile> {
-  bool isLiked = false;
+  late bool isliked;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isliked = false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       // height: 90,
       // width: 50,
@@ -35,24 +44,25 @@ class _InventoryTileState extends State<InventoryTile> {
           Expanded(
             child: Stack(
               children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Center(
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        child: Card(
-                          elevation: 5,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                            child: SizedBox(
-                              height: widget.constraints.maxHeight * 0.6,
-                              width: double.infinity,
-                              // color: Colors.orange,
+                Container(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      child: Card(
+                        elevation: 5,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                          child: SizedBox(
+                            height: widget.constraints.maxHeight * 0.6,
+                            width: double.infinity,
+                            // color: Colors.orange,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
@@ -66,12 +76,11 @@ class _InventoryTileState extends State<InventoryTile> {
                     ),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                   right: 10,
                   top: 10,
                   child: LikeButton(
                     size: 25,
-                    isLiked: isLiked,
                   ),
                 ),
               ],
@@ -82,9 +91,9 @@ class _InventoryTileState extends State<InventoryTile> {
             height: widget.constraints.maxHeight * 0.2,
             width: double.infinity,
             alignment: Alignment.center,
-            child: const Text(
-              "Item Name",
-              style: TextStyle(fontSize: 24),
+            child: Text(
+              widget.item.name,
+              style: const TextStyle(fontSize: 24),
             ),
           ),
           Row(
@@ -97,26 +106,23 @@ class _InventoryTileState extends State<InventoryTile> {
                     bottomRight: Radius.circular(12),
                   ),
                 ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    border: Border.all(
                       color: Colors.orange,
-                      border: Border.all(
-                        color: Colors.orange,
-                        style: BorderStyle.solid,
-                        width: 2,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(11),
-                      ),
+                      style: BorderStyle.solid,
+                      width: 2,
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.add_rounded,
-                        size: 25,
-                      ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(11),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.add_rounded,
+                      size: 25,
                     ),
                   ),
                 ),

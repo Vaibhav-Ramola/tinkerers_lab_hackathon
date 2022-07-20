@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "32857210576",
+    "firebase_url": "https://tinkererslab-e8d3e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tinkererslab-e8d3e",
+    "storage_bucket": "tinkererslab-e8d3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32857210576:android:cc0c4fdaf5ffd1544ea8d5",
+        "android_client_info": {
+          "package_name": "com.example.tinkerlab_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32857210576-0snla6rtfk4cuhcv4rrf3eq6af4khimk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZxk1c6JXzUqtar71M_AYrPv2LO6MNIew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32857210576-0snla6rtfk4cuhcv4rrf3eq6af4khimk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

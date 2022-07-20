@@ -10,7 +10,7 @@ class ItemProvider with ChangeNotifier {
 
   List<Item> get inventoryItemsList => [..._inventoryItemsList];
 
-  Future<void> fetchAndSetInventoryItems() async {
+  Future<List<Item>> fetchAndSetInventoryItems() async {
     _inventoryItemsList.clear();
     final url = Uri.parse(
       "https://tinkererslab-e8d3e-default-rtdb.asia-southeast1.firebasedatabase.app/inventory_items.json",
@@ -18,18 +18,27 @@ class ItemProvider with ChangeNotifier {
 
     try {
       final response = await http.get(url);
-      final data =
-          json.decode(response.body) as Map<String, Map<String, String>>;
-
-      data.forEach((key, value) {
-        _inventoryItemsList.add(Item(
-          category: value["category"]!,
-          description: value["description"]!,
-          imageUrl: value["imageUrl"]!,
-          name: value["name"]!,
-        ));
-      });
-    } catch (e) {}
+      // print(response.body.runtimeType);
+      dynamic data =
+          json.decode(response.body.toString()) as Map<String, dynamic>;
+      data.forEach(
+        (key, value) {
+          _inventoryItemsList.add(
+            Item(
+              category: value["category"] as String,
+              description: value["description"] as String,
+              imageUrl: value["imageUrl"] as String,
+              name: value["name"] as String,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+    // ignore: null_argument_to_non_null_type
+    return Future.value([..._inventoryItemsList]);
   }
 
   Future<void> addItemToInventory(Item item) async {
@@ -48,9 +57,11 @@ class ItemProvider with ChangeNotifier {
           },
         ),
       )
-          .then((value) {
-        _inventoryItemsList.add(item);
-      });
+          .then(
+        (value) {
+          _inventoryItemsList.add(item);
+        },
+      );
     } catch (e) {
       print(e);
     }

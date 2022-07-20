@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:tinkerlab_app/providers/item_provider.dart';
+import 'package:tinkerlab_app/screens/auth_screen.dart';
 import 'package:tinkerlab_app/screens/categories_screen.dart';
 import 'package:tinkerlab_app/screens/favourites_screen.dart';
 import 'package:tinkerlab_app/screens/purchase_screen.dart';
@@ -24,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[screenIndex],
+      body: screens[screenIndex], //screens[screenIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: ((value) {
           setState(() {
