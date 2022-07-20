@@ -58,6 +58,11 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
               }),
             );
           }),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.send),
+          onPressed: () {
+            Provider.of<ItemProvider>(context, listen: false).sendRequest(cartList);
+          }),
     );
   }
 }

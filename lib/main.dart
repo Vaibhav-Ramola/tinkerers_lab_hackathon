@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tinkerlab_app/providers/item_provider.dart';
 import 'package:tinkerlab_app/screens/add_new_item_screen.dart';
 import 'package:tinkerlab_app/screens/auth_screen.dart';
+import 'package:tinkerlab_app/screens/delete_screen.dart';
 import 'package:tinkerlab_app/screens/home_screen.dart';
 
 void main() async {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const AuthScreen(),
         routes: {
+          "delete_screen":(context) => const DeleteScreen(),
           "home_screen": (context) => const HomeScreen(),
           "add_new_item": (context) => const AddNewItemScreen(),
           "auth_screen": (context) => const AuthScreen(),

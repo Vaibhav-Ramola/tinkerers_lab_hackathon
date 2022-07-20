@@ -38,7 +38,8 @@ class _DeleteScreenState extends State<DeleteScreen> {
                     color: Colors.red,
                   ),
                   onPressed: () {
-                    
+                    Provider.of<ItemProvider>(context, listen: false)
+                        .deleteItemFromInventory(inventoryItemsList[index].id);
                   },
                 ),
               );

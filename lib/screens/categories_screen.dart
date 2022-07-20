@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
+import 'package:tinkerlab_app/models/item_model.dart';
 import 'package:tinkerlab_app/providers/item_provider.dart';
 import 'package:tinkerlab_app/widgets/inventory_tile_widget.dart';
 
@@ -21,7 +22,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     final String? email = auth.currentUser?.email;
     final bool showAddItemButton = email == "ep20btech11025@iith.ac.in";
-    final inventoryItemsList =
+    var inventoryItemsList =
         Provider.of<ItemProvider>(context).inventoryItemsList;
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -44,7 +45,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           IconButton(
             onPressed: showAddItemButton
                 ? () {
-                    Navigator.of(context).pushNamed("add_new_item");            // add delete screen route here
+                    Navigator.of(context).pushNamed(
+                        "delete_screen"); // add delete screen route here
                   }
                 : null,
             icon: const Icon(
@@ -117,6 +119,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               );
             }
+            print(snapshot.data);
+            inventoryItemsList = snapshot.data as List<Item>;
             return Container(
               padding: const EdgeInsets.only(
                 right: 24,

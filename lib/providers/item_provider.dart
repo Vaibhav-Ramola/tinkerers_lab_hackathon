@@ -8,6 +8,7 @@ import 'package:tinkerlab_app/models/cart_item_model.dart';
 import 'dart:convert';
 
 import 'package:tinkerlab_app/models/item_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemProvider with ChangeNotifier {
   List<Item> _inventoryItemsList = [];
@@ -73,7 +74,7 @@ class ItemProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    notifyListeners();
+    // notifyListeners();
     // ignore: null_argument_to_non_null_type
     return Future.value([..._inventoryItemsList]);
   }
@@ -190,5 +191,20 @@ class ItemProvider with ChangeNotifier {
       print(e);
     }
     notifyListeners();
+  }
+
+  Future<void> sendRequest(List<CartItem> list) async {
+    String body = "";
+    for (var element in list) {
+      print("cart items : ${element.name}");
+      body = "$body${element.name}\n";
+    }
+    print(body);
+    final url = Uri.parse(
+      "mailto:ep20btech11025@iith.ac.in?subject=${Uri.encodeFull("Request to Issue")}&body=${Uri.encodeFull(body)}",
+    );
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    }
   }
 }
