@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tinkerlab_app/models/item_model.dart';
 
 import '../providers/item_provider.dart';
 
@@ -13,15 +14,28 @@ class DeleteScreen extends StatefulWidget {
 class _DeleteScreenState extends State<DeleteScreen> {
   @override
   Widget build(BuildContext context) {
-    final inventoryItemsList =
-        Provider.of<ItemProvider>(context).inventoryItemsList;
+    late var inventoryItemsList;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Delete Items"),
       ),
       body: FutureBuilder(
-        future: Provider.of<ItemProvider>(context).fetchAndSetInventoryItems(),
+        future: Provider.of<ItemProvider>(
+          context,
+          listen: false,
+        ).fetchAndSetInventoryItems(),
         builder: ((context, snapshot) {
+          if (!snapshot.hasData) {
+            return const SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          inventoryItemsList = snapshot.data as List<Item>;
           return ListView.builder(
             itemCount: inventoryItemsList.length,
             itemBuilder: ((context, index) {

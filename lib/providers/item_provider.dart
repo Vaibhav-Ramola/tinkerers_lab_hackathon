@@ -13,12 +13,14 @@ import 'package:url_launcher/url_launcher.dart';
 class ItemProvider with ChangeNotifier {
   List<Item> _inventoryItemsList = [];
   List<CartItem> _cartItemList = [];
-  Set<String> _favourites = {};
+  List<Item> _favourites = [];
   final auth = FirebaseAuth.instance;
 
   List<Item> get inventoryItemsList => [..._inventoryItemsList];
   // Map<String, bool> _favourites = {};
   List<CartItem> get cartItems => [..._cartItemList];
+  List<Item> get favourites => [..._favourites];
+
   Future<List<Item>> fetchAndSetInventoryItems() async {
     _inventoryItemsList.clear();
     String? email = auth.currentUser?.email;
@@ -41,6 +43,7 @@ class ItemProvider with ChangeNotifier {
       // print("fav response : ${favResponse.body}");
 
       favData = json.decode(favResponse.body);
+      print(favData);
       if (favData != null) {
         favData = favData as Map<String, dynamic>;
       }
@@ -54,8 +57,9 @@ class ItemProvider with ChangeNotifier {
           (key, value) {
             bool like = false;
             if (favData != null) {
-              if (favData[key] == true) {
+              if (favData[key].toString() == "true") {
                 like = true;
+                // print("In here\n");
               }
             }
             _inventoryItemsList.add(
@@ -74,7 +78,7 @@ class ItemProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    // notifyListeners();
+    notifyListeners();
     // ignore: null_argument_to_non_null_type
     return Future.value([..._inventoryItemsList]);
   }
@@ -115,14 +119,16 @@ class ItemProvider with ChangeNotifier {
     final url = Uri.parse(
         "https://tinkererslab-e8d3e-default-rtdb.asia-southeast1.firebasedatabase.app/$email/favourites.json");
 
-    await http.patch(
-      url,
-      body: json.encode(
-        {
-          id: isLiked.toString(),
-        },
-      ),
-    );
+    await http
+        .patch(
+          url,
+          body: json.encode(
+            {
+              id: isLiked.toString(),
+            },
+          ),
+        )
+        .then((value) => print(value));
   }
 
   Future<void> addToCart(Item item) async {
@@ -206,5 +212,12 @@ class ItemProvider with ChangeNotifier {
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     }
+  }
+
+  Future<List<Item>> fetchAndSetFavourites() async {
+    _favourites =
+        _inventoryItemsList.where((element) => element.isFavourite).toList();
+    // notifyListeners();
+    return Future.value([..._favourites]);
   }
 }

@@ -27,7 +27,10 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         title: const Text("Issue component"),
       ),
       body: FutureBuilder(
-          future: Provider.of<ItemProvider>(context).fetchAndSetCartItems(),
+          future: Provider.of<ItemProvider>(
+            context,
+            listen: false,
+          ).fetchAndSetCartItems(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const SizedBox(
@@ -61,7 +64,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.send),
           onPressed: () {
-            Provider.of<ItemProvider>(context, listen: false).sendRequest(cartList);
+            Provider.of<ItemProvider>(context, listen: false)
+                .sendRequest(cartList);
           }),
     );
   }

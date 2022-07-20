@@ -106,8 +106,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
       ),
       body: FutureBuilder(
-          future:
-              Provider.of<ItemProvider>(context).fetchAndSetInventoryItems(),
+          future: Provider.of<ItemProvider>(
+            context,
+            listen: false,
+          ).fetchAndSetInventoryItems(),
           builder: (context, snapshot) {
             // print(snapshot);
             if (!snapshot.hasData) {
@@ -119,7 +121,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               );
             }
-            print(snapshot.data);
+            // print(snapshot.data);
             inventoryItemsList = snapshot.data as List<Item>;
             return Container(
               padding: const EdgeInsets.only(
