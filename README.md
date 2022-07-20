@@ -1,16 +1,33 @@
-# tinkerlab_app
 
-A new Flutter project.
+# Tinkerer's Inventory
 
-## Getting Started
+To setup the repo
+ 
+1. Setup Flutter in your machine, which can be easily done following
+the [flutter documentation](https://docs.flutter.dev/get-started/install)
 
-This project is a starting point for a Flutter application.
+2. run 
+```
+flutter doctor
+```
+on your terminal after installing flutter
+and fulfill any requirements if asked
 
-A few resources to get you started if this is your first Flutter project:
+3. Now open the repo in VS code and in the VScode terminal
+```
+cd <to the project directory>
+```
+and then run
+```
+flutter run
+```
+before running the above command make sure u have your mobile device 
+connected to your machine and it's in developer mode and VScode is able
+to detect it.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+the app will run.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### All the code for the project resides in lid directory
+
+:):
+
