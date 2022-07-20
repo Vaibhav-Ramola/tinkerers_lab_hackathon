@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
+import 'package:tinkerlab_app/providers/item_provider.dart';
 
 import '../models/item_model.dart';
 
@@ -8,25 +10,23 @@ class InventoryTile extends StatefulWidget {
   final BoxConstraints constraints;
   final Item item;
 
-  const InventoryTile(this.constraints, this.item, {Key? key})
-      : super(key: key);
+  InventoryTile(this.constraints, this.item, {Key? key}) : super(key: key);
 
   @override
   State<InventoryTile> createState() => _InventoryTileState();
 }
 
 class _InventoryTileState extends State<InventoryTile> {
-  late bool isliked;
+  late bool like;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    isliked = false;
+    like = widget.item.isFavourite;
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       // height: 90,
       // width: 50,
@@ -76,11 +76,29 @@ class _InventoryTileState extends State<InventoryTile> {
                     ),
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   right: 10,
                   top: 10,
-                  child: LikeButton(
-                    size: 25,
+                  child: GestureDetector(
+                    onTap: (() {
+                      setState(() {
+                        print(like);
+                        like = !like;
+                        print(like);
+                        Provider.of<ItemProvider>(
+                          context,
+                          listen: false,
+                        ).toggleItemLike(
+                          like,
+                          widget.item.id,
+                        );
+                      });
+                    }),
+                    child: Icon(
+                      Icons.favorite,
+                      size: 30,
+                      color: like ? Colors.orange : Colors.grey,
+                    ),
                   ),
                 ),
               ],
@@ -99,30 +117,38 @@ class _InventoryTileState extends State<InventoryTile> {
           Row(
             children: [
               const Spacer(),
-              Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12),
-                  ),
-                ),
+              GestureDetector(
+                onTap: () {
+                  Provider.of<ItemProvider>(
+                    context,
+                    listen: false,
+                  ).addToCart(widget.item);
+                },
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    border: Border.all(
-                      color: Colors.orange,
-                      style: BorderStyle.solid,
-                      width: 2,
-                    ),
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
-                      bottomRight: Radius.circular(11),
+                      bottomRight: Radius.circular(12),
                     ),
                   ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.add_rounded,
-                      size: 25,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      border: Border.all(
+                        color: Colors.orange,
+                        style: BorderStyle.solid,
+                        width: 2,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(11),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.add_rounded,
+                        size: 25,
+                      ),
                     ),
                   ),
                 ),

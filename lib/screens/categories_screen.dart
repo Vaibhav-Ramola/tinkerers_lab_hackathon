@@ -16,8 +16,11 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   bool isLiked = false;
   final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+    final String? email = auth.currentUser?.email;
+    final bool showAddItemButton = email == "ep20btech11025@iith.ac.in";
     final inventoryItemsList =
         Provider.of<ItemProvider>(context).inventoryItemsList;
     return Scaffold(
@@ -28,14 +31,27 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("add_new_item");
-            },
+            onPressed: showAddItemButton
+                ? () {
+                    Navigator.of(context).pushNamed("add_new_item");
+                  }
+                : null,
             icon: const Icon(
               Icons.add_rounded,
               color: Colors.white,
             ),
           ),
+          IconButton(
+            onPressed: showAddItemButton
+                ? () {
+                    Navigator.of(context).pushNamed("add_new_item");            // add delete screen route here
+                  }
+                : null,
+            icon: const Icon(
+              Icons.delete_forever,
+              color: Colors.red,
+            ),
+          )
         ],
       ),
       drawer: Drawer(
@@ -91,7 +107,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           future:
               Provider.of<ItemProvider>(context).fetchAndSetInventoryItems(),
           builder: (context, snapshot) {
-            print(snapshot);
+            // print(snapshot);
             if (!snapshot.hasData) {
               return const SizedBox(
                 height: double.infinity,

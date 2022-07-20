@@ -204,6 +204,8 @@ class _AddNewItemScreenState extends State<AddNewItemScreen> {
                               description: description!,
                               imageUrl: imageUrl!,
                               name: name!,
+                              id: DateTime.now().toIso8601String(),
+                              isFavourite: false,
                             ),
                           )
                           .then(
